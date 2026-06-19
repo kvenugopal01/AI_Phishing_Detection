@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Phishing Website Detector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="glass-bg"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i data-lucide="shield-alert" class="icon-pulse"></i>
+                </div>
+                <div>
+                    <h1>Phishing Detector <span>AI</span></h1>
+                    <p class="subtitle">Check if a link is safe or phishing using machine learning</p>
+                </div>
+            </div>
+            <div class="model-badge">
+                <span class="pulse-dot"></span>
+                Random Forest Accuracy: 96.65%
+            </div>
+        </header>
+
+        <!-- Main Dashboard Card -->
+        <main class="main-card">
+            <!-- URL Input Panel -->
+            <section class="search-section">
+                <h2>Analyze Website Safety</h2>
+                <p class="search-desc">Enter any website URL to perform a multi-factor heuristic and machine learning phishing analysis.</p>
+                
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i data-lucide="link" class="input-icon"></i>
+                        <input type="text" id="url-input" placeholder="e.g. https://secure-login-bank.com or google.com" required>
+                    </div>
+                    <button id="scan-btn" onclick="startAnalysis()">
+                        <span id="btn-text">Analyze URL</span>
+                        <i data-lucide="search" id="btn-icon"></i>
+                    </button>
+                </div>
+                <div id="error-message" class="error-toast hidden"></div>
+            </section>
+
+            <!-- Loading / Scanning State -->
+            <section id="scanning-panel" class="scanning-panel hidden">
+                <div class="radar-container">
+                    <div class="radar-circle"></div>
+                    <div class="radar-circle delay-1"></div>
+                    <div class="radar-circle delay-2"></div>
+                    <i data-lucide="shield-check" class="scanning-shield"></i>
+                </div>
+                <h3 id="scanning-status">Initiating Analysis...</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+                <ul class="terminal-logs" id="terminal-logs">
+                    <!-- Dynamic logs here -->
+                </ul>
+            </section>
+
+            <!-- Results Panel -->
+            <section id="results-panel" class="results-panel hidden">
+                <!-- Verdict Header -->
+                <div class="verdict-card" id="verdict-card">
+                    <div class="verdict-badge-container">
+                        <div class="verdict-icon-bg" id="verdict-icon-bg">
+                            <i data-lucide="shield-check" id="verdict-icon"></i>
+                        </div>
+                        <div>
+                            <span class="small-title">SCAN RESULTS FOR</span>
+                            <h3 id="result-domain">domain.com</h3>
+                            <p class="ip-info"><i data-lucide="globe" class="inline-icon"></i> IP: <span id="resolved-ip">127.0.0.1</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="verdict-gauge">
+                        <div class="radial-progress-container">
+                            <div class="radial-progress">
+                                <svg>
+                                    <circle cx="70" cy="70" r="60"></circle>
+                                    <circle cx="70" cy="70" r="60" id="progress-ring-circle"></circle>
+                                </svg>
+                                <div class="number">
+                                    <h2 id="confidence-pct">00%</h2>
+                                    <p id="verdict-lbl">CONFIDENCE</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verdict-desc-area">
+                            <div class="badge" id="threat-badge">SAFE</div>
+                            <p class="verdict-text" id="verdict-text-summary">This website does not exhibit known phishing characteristics and matches legitimate web standards.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Details Accordion -->
+                <div class="details-section">
+                    <div class="section-title-wrapper">
+                        <h3><i data-lucide="layers"></i> Deep Inspection Breakdown</h3>
+                        <p class="section-desc">We evaluated 30 distinct indicators across three main categories to classify this site.</p>
+                    </div>
+
+                    <!-- Category Tabs -->
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="switchTab('url-struct')">URL Structure</button>
+                        <button class="tab-btn" onclick="switchTab('network-sec')">Security & Domain</button>
+                        <button class="tab-btn" onclick="switchTab('dom-content')">Page Content (DOM)</button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="tab-content-area">
+                        <!-- URL Structure Features -->
+                        <div class="tab-pane active" id="url-struct">
+                            <div class="features-grid" id="url-struct-grid">
+                                <!-- Dynamic URL features -->
+                            </div>
+                        </div>
+
+                        <!-- Network / Sec Features -->
+                        <div class="tab-pane" id="network-sec">
+                            <div class="features-grid" id="network-sec-grid">
+                                <!-- Dynamic Network features -->
+                            </div>
+                        </div>
+
+                        <!-- DOM Content Features -->
+                        <div class="tab-pane" id="dom-content">
+                            <div class="features-grid" id="dom-content-grid">
+                                <!-- Dynamic DOM features -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer-bar">
+            <p>AI Phishing Website Detector using Random Forest Classifier &middot; &copy; 2026</p>
+        </footer>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        // Initialize lucide icons
+        lucide.createIcons();
+
+        // Categorize the 30 features
+        const CATEGORIES = {
+            url: [
+                'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 
+                'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix', 
+                'having_Sub_Domain', 'HTTPS_token', 'port', 'Abnormal_URL'
+            ],
+            network: [
+                'SSLfinal_State', 'Domain_registeration_length', 'age_of_domain', 
+                'DNSRecord', 'web_traffic', 'Page_Rank', 'Google_Index', 
+                'Links_pointing_to_page', 'Statistical_report'
+            ],
+            dom: [
+                'Favicon', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 
+                'SFH', 'Submitting_to_email', 'Redirect', 'on_mouseover', 
+                'RightClick', 'popUpWidnow', 'Iframe'
+            ]
+        };
+
+        const logsList = [
+            "Normalizing URL structure...",
+            "Resolving DNS records & domain age...",
+            "Checking shortening service registries...",
+            "Querying page headers and protocols...",
+            "Fetching page HTML structure...",
+            "Parsing anchor links and external script percentages...",
+            "Analyzing form handlers & iframe injections...",
+            "Running feature vector through Random Forest Classifier..."
+        ];
+
+        let currentLogsInterval = null;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getStatusIcon(status) {
+            if (status === 'safe') return 'check-circle-2';
+            if (status === 'suspicious') return 'alert-circle';
+            return 'x-circle';
+        }
+
+        async function startAnalysis() {
+            const urlInput = document.getElementById('url-input').value.trim();
+            const errorToast = document.getElementById('error-message');
+            
+            if (!urlInput) {
+                errorToast.textContent = "Please enter a valid website URL.";
+                errorToast.classList.remove('hidden');
+                return;
+            }
+            errorToast.classList.add('hidden');
+
+            // Reset dashboard state
+            document.getElementById('results-panel').classList.add('hidden');
+            const scanningPanel = document.getElementById('scanning-panel');
+            scanningPanel.classList.remove('hidden');
+            
+            // Start terminal emulation logs
+            const logsContainer = document.getElementById('terminal-logs');
+            logsContainer.innerHTML = '';
+            
+            const progressFill = document.getElementById('progress-fill');
+            const statusHeading = document.getElementById('scanning-status');
+            
+            progressFill.style.width = '0%';
+            
+            let logIndex = 0;
+            if (currentLogsInterval) clearInterval(currentLogsInterval);
+            
+            statusHeading.textContent = "Initiating Security Scan...";
+            
+            currentLogsInterval = setInterval(() => {
+                if (logIndex < logsList.length) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="time-stamp">[SEC-SYS]</span> ${logsList[logIndex]}`;
+                    logsContainer.appendChild(li);
+                    logsContainer.scrollTop = logsContainer.scrollHeight;
+                    
+                    statusHeading.textContent = logsList[logIndex];
+                    
+                    logIndex++;
+                    const progressVal = Math.round((logIndex / logsList.length) * 100);
+                    progressFill.style.width = `${progressVal}%`;
+                }
+            }, 450);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: urlInput })
+                });
+                
+                const data = await response.json();
+                
+                // Ensure loading animation finishes nicely
+                setTimeout(() => {
+                    clearInterval(currentLogsInterval);
+                    scanningPanel.classList.add('hidden');
+                    
+                    if (data.success) {
+                        renderResults(data);
+                    } else {
+                        errorToast.textContent = data.error || "An error occurred during analysis.";
+                        errorToast.classList.remove('hidden');
+                    }
+                }, 4000); // Allow logs to scroll for visual impact
+
+            } catch (err) {
+                clearInterval(currentLogsInterval);
+                scanningPanel.classList.add('hidden');
+                errorToast.textContent = "Unable to connect to safety scanning servers.";
+                errorToast.classList.remove('hidden');
+            }
+        }
+
+        function renderResults(data) {
+            const resultsPanel = document.getElementById('results-panel');
+            resultsPanel.classList.remove('hidden');
+
+            document.getElementById('result-domain').textContent = data.domain;
+            document.getElementById('resolved-ip').textContent = data.resolved_ip || "N/A (Offline/DNS failed)";
+
+            // Set Verdict Badge and Text
+            const threatBadge = document.getElementById('threat-badge');
+            const verdictSummary = document.getElementById('verdict-text-summary');
+            const verdictCard = document.getElementById('verdict-card');
+            const iconBg = document.getElementById('verdict-icon-bg');
+            const vIcon = document.getElementById('verdict-icon');
+
+            // Reset classes
+            verdictCard.className = "verdict-card";
+            threatBadge.className = "badge";
+            iconBg.className = "verdict-icon-bg";
+
+            if (data.verdict === 'safe') {
+                verdictCard.classList.add('verdict-safe');
+                threatBadge.classList.add('badge-safe');
+                threatBadge.textContent = "SECURE / SAFE";
+                iconBg.classList.add('bg-safe');
+                vIcon.setAttribute('data-lucide', 'shield-check');
+                verdictSummary.textContent = `The model predicts this domain is safe (${data.confidence}% confidence score). No threat structures detected.`;
+            } else {
+                verdictCard.classList.add('verdict-danger');
+                threatBadge.classList.add('badge-danger');
+                threatBadge.textContent = "PHISHING / THREAT DETECTED";
+                iconBg.classList.add('bg-danger');
+                vIcon.setAttribute('data-lucide', 'shield-alert');
+                verdictSummary.textContent = `Warning! The model predicts this is a phishing domain with high confidence (${data.confidence}% score). Do not visit this site!`;
+            }
+
+            // Radial progress animate
+            document.getElementById('confidence-pct').textContent = `${data.confidence}%`;
+            const circle = document.getElementById('progress-ring-circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            
+            // Adjust styling of the progress ring
+            if (data.verdict === 'safe') {
+                circle.style.stroke = "var(--emerald-glowing)";
+            } else {
+                circle.style.stroke = "var(--crimson-glowing)";
+            }
+            
+            const offset = circumference - (data.confidence / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Clear previous grid contents
+            document.getElementById('url-struct-grid').innerHTML = '';
+            document.getElementById('network-sec-grid').innerHTML = '';
+            document.getElementById('dom-content-grid').innerHTML = '';
+
+            // Populate features
+            const details = data.features_details;
+            
+            for (const [key, feat] of Object.entries(details)) {
+                const card = document.createElement('div');
+                card.className = `feature-item-card status-${feat.status}`;
+                
+                const iconName = getStatusIcon(feat.status);
+                
+                card.innerHTML = `
+                    <div class="feat-top">
+                        <i data-lucide="${iconName}" class="feat-status-icon"></i>
+                        <span class="feat-title">${feat.display}</span>
+                        <span class="feat-badge-tag tag-${feat.status}">${feat.badge}</span>
+                    </div>
+                    <p class="feat-desc">${feat.description}</p>
+                `;
+                
+                // Append to correct tab category
+                if (CATEGORIES.url.includes(key)) {
+                    document.getElementById('url-struct-grid').appendChild(card);
+                } else if (CATEGORIES.network.includes(key)) {
+                    document.getElementById('network-sec-grid').appendChild(card);
+                } else if (CATEGORIES.dom.includes(key)) {
+                    document.getElementById('dom-content-grid').appendChild(card);
+                }
+            }
+
+            // Re-render lucide icons inside generated elements
+            lucide.createIcons();
+            
+            // Scroll to results cleanly
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>

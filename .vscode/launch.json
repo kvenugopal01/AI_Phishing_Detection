@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask App",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "app.py",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--port",
+                "5001"
+            ],
+            "jinja": true,
+            "python": "${workspaceFolder}/venv/bin/python"
+        },
+        {
+            "name": "Python: Run app.py script",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "app.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/venv/bin/python"
+        }
+    ]
+}
