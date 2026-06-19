@@ -1,30 +1,44 @@
-# AI Phishing Detection
+# 🛡️ AI Phishing Detection
 
-## Overview
+A Machine Learning-powered web application that detects whether a URL is **Legitimate** or **Phishing** by analyzing URL-based security features and predicting threats in real time.
 
-AI Phishing Detection is a machine learning-based web application that detects whether a URL is legitimate or potentially phishing. The project uses feature extraction techniques and a trained machine learning model to analyze URLs and provide real-time predictions.
+---
 
-## Features
+## 🚀 Tech Stack
 
-* Detects phishing websites using Machine Learning
-* Extracts multiple URL-based security features
-* User-friendly web interface built with Flask
-* Real-time URL analysis and prediction
-* Fast and lightweight deployment
+<p align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="45" alt="Python" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" height="45" alt="Flask" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" height="45" alt="Pandas" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="45" alt="NumPy" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="45" alt="HTML5" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="45" alt="CSS3" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="45" alt="Git" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" height="45" alt="GitHub" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="45" alt="VS Code" />
+</p>
 
-## Tech Stack
+---
 
-* Python
-* Flask
-* Scikit-learn
-* Pandas
-* NumPy
-* HTML
-* CSS
+## ✨ Features
 
-## Project Structure
+✅ Phishing URL Detection
 
-```
+✅ Machine Learning Prediction Model
+
+✅ Real-time URL Analysis
+
+✅ Feature Extraction Engine
+
+✅ Responsive Flask Web Interface
+
+✅ Fast and Lightweight Deployment
+
+---
+
+## 📂 Project Structure
+
+```text
 AI_Phishing_Detection/
 │
 ├── app.py
@@ -37,11 +51,13 @@ AI_Phishing_Detection/
 │   └── index.html
 ├── static/
 │   └── style.css
-├── README.md
-└── .gitignore
+├── .gitignore
+└── README.md
 ```
 
-## Installation
+---
+
+## ⚙️ Installation
 
 ### Clone Repository
 
@@ -56,15 +72,15 @@ cd AI_Phishing_Detection
 python -m venv venv
 ```
 
-### Activate Virtual Environment
+### Activate Environment
 
-**Windows**
+#### Windows
 
 ```bash
 venv\Scripts\activate
 ```
 
-**Mac/Linux**
+#### Mac/Linux
 
 ```bash
 source venv/bin/activate
@@ -76,52 +92,51 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Run Application
+---
+
+## ▶️ Run the Application
 
 ```bash
 python app.py
 ```
 
-Open your browser and visit:
+Open your browser:
 
-```
+```text
 http://127.0.0.1:5000
 ```
 
-## How It Works
+---
 
-1. User enters a URL.
-2. The system extracts security-related URL features.
-3. The trained machine learning model analyzes the features.
-4. The application predicts whether the URL is:
+## 🧠 Machine Learning Workflow
 
-   * Legitimate Website
-   * Phishing Website
+1. Dataset Collection
+2. Data Preprocessing
+3. Feature Extraction
+4. Model Training
+5. Model Evaluation
+6. Flask Deployment
 
-## Machine Learning Workflow
+---
 
-* Data Collection
-* Data Preprocessing
-* Feature Extraction
-* Model Training
-* Model Evaluation
-* Deployment with Flask
+## 📈 Future Improvements
 
-## Future Enhancements
+* Deep Learning Models
+* Browser Extension
+* Real-Time Threat Intelligence APIs
+* URL Reputation Scoring
+* Cloud Deployment
 
-* Deep Learning-based Detection
-* Real-time Threat Intelligence Integration
-* Browser Extension Support
-* API Integration
-* Enhanced Visualization Dashboard
+---
 
-## Author
+## 👨‍💻 Author
 
 **K. Venu Gopal**
 
-* GitHub: https://github.com/kvenugopal01
-* LinkedIn: https://www.linkedin.com/in/kommanaboyina-venu-gopal-520a95339/
+🔗 GitHub: https://github.com/kvenugopal01
 
-## License
+🔗 LinkedIn: https://www.linkedin.com/in/kommanaboyina-venu-gopal-520a95339/
 
-This project is developed for educational and research purposes.
+---
+
+⭐ If you found this project useful, don't forget to star the repository!
